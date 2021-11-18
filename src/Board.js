@@ -145,10 +145,10 @@
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       let haspieceondiagonal = false;
       //loop through the matrix
-      let matrix = this.rows();
-      if (matrix[0] === 1) {
-        haspieceondiagonal = true;
-      }
+      let matrix = this.rows(); //[[ar(4)], [ar(4)], [ar(4)], [ar(4)] ]; [[1,2,3,4],[5,6,7,8],[],[]]
+      // if (matrix[0] === 1) {
+      //   haspieceondiagonal = true;
+      // }
       for (let key in matrix) {
         for (let i = 0; i < matrix[key].length; i++) {
           if (this._getFirstRowColumnIndexForMajorDiagonalOn(key, i) === majorDiagonalColumnIndexAtFirstRow) {
@@ -186,11 +186,60 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+
+      let counter = 0;
+      // loop over each row on a matrix
+      for (let i = 0; i < this.get('n'); i++) {
+        //now we are at at first row (get a row no.)
+        let currentRow = this.get(i);
+        // at row no.0 >> loop over the row [index]
+        for (let j = 0; j < this.get('n'); j++) {
+          if (this._getFirstRowColumnIndexForMinorDiagonalOn(i, j) === minorDiagonalColumnIndexAtFirstRow ) {
+            if (currentRow[j] === 1) {
+              counter++;
+              if (counter > 1) {
+                return true;
+              }
+            }
+
+          }
+        }
+      } return false;
     },
+
+      // let haspieceondiagonal = false;
+      // //loop through the matrix
+      // let matrix = this.rows(); //[[ar(4)], [ar(4)], [ar(4)], [ar(4)] ]; [[1,2,3,4],[5,6,7,8],[],[]]
+      // // if (matrix[0] === 1) {
+      // //   haspieceondiagonal = true;
+      // // }
+      // for (let key in matrix) {
+      //   for (let i = 0; i < matrix[key].length; i++) {
+      //     if (this._getFirstRowColumnIndexForMinorDiagonalOn(key, i) === minorDiagonalColumnIndexAtFirstRow) {
+      //       if (matrix[key][i] === 1 && haspieceondiagonal === false) {
+      //         haspieceondiagonal = true;
+      //       } else if (matrix[key][i] === 1 && haspieceondiagonal === true) {
+      //         return true;
+      //       }
+      //     }
+      //   }
+      // }
+      // //run getfirstrowcolumnbah on the individual col,row index
+      // //if the number for that is equal to the argument
+      // //retru ntrue;
+      // return false;
+
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      let matrix = this.rows();
+      let num = this.get('n');
+
+      for (let i = 0; i < num * 2; i++) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     }
 
