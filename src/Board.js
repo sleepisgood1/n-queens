@@ -186,7 +186,6 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-
       let counter = 0;
       // loop over each row on a matrix
       for (let i = 0; i < this.get('n'); i++) {
@@ -201,7 +200,6 @@
                 return true;
               }
             }
-
           }
         }
       } return false;
